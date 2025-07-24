@@ -32,5 +32,6 @@ jobs:
         run: |
           mvn clean verify -DskipTests=true sonar:sonar \
             -Dsonar.projectKey=pos-backend \
+            -Dsonar.projectName="POS Backend" \
             -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} 
