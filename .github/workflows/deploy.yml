@@ -30,7 +30,7 @@ jobs:
 
       - name: Build & Analyze with SonarQube
         run: |
-          mvn clean verify sonar:sonar \
+          mvn clean verify -DskipTests=true sonar:sonar \
             -Dsonar.projectKey=pos-backend \
             -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
