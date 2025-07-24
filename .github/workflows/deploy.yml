@@ -33,5 +33,4 @@ jobs:
           mvn clean verify -DskipTests=true sonar:sonar \
             -Dsonar.projectKey=pos-backend \
             -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.branch.name=${GITHUB_REF_NAME}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} 
