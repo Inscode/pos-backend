@@ -1,30 +1,43 @@
 package com.aasait.pos.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "orders")              // “order” is a SQL keyword, so keep it plural
 @Data
-@Table(name = "orders")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Order {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String batchNo;
-    private String status;
-    private double total;
-    private double paidAmount;
-    private double payableAmount;
-    private LocalDate orderDate;
+    private String batchId;
+    private double quantity;
+    private double unitPrice;
+    private double sellPrice;
 
-    @ManyToOne
-    private Supplier supplierId;
+    /* -------- owning side Item‑›Order -------- */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    @JsonBackReference
+    private Item item;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> items = new ArrayList<>();
+    /* -------- reverse side Order‑›Invoice -------- */
+//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Invoice> invoices = new ArrayList<>();
 }
